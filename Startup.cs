@@ -45,7 +45,6 @@ namespace SwaggerAuthDemo
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
-                c.OperationFilter<AuthorizationHeaderParameterOperationFilter>();
                 c.AddSecurityDefinition("oauth2", new OAuth2Scheme
                 {
                     Type = "oauth2",
@@ -76,7 +75,7 @@ namespace SwaggerAuthDemo
             app.UseSwaggerUI(c =>
             {
                 c.RoutePrefix = String.Empty;
-                c.DocExpansion(DocExpansion.None);
+                c.DocExpansion(DocExpansion.List);
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 c.OAuth2RedirectUrl($"{Configuration["AzureAd:OAuth2RedirectUrl"]}");
                 c.OAuthClientId($"{Configuration["AzureAd:ClientId"]}");
