@@ -58,11 +58,7 @@ namespace SwaggerAuthDemo
                     Type = "oauth2",
                     AuthorizationUrl = $"https://login.microsoftonline.com/{Configuration["AzureAd:DirectoryId"]}/oauth2/authorize",
                     TokenUrl = $"https://login.microsoftonline.com/{Configuration["AzureAd:DirectoryId"]}/oauth2/token",
-                    Flow = "implicit",
-                    Scopes = new Dictionary<string, string>
-                    {
-                        { "user_impersonation", "Access TenantManager.Api" }
-                    }
+                    Flow = "implicit"
                 });
                 c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
                     { "oauth2", new string []  { "user_impersonation" } }
