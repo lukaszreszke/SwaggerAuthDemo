@@ -63,6 +63,13 @@ namespace SwaggerAuthDemo
                 c.RoutePrefix = String.Empty;
                 c.DocExpansion(DocExpansion.None);
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.OAuth2RedirectUrl($"{Configuration["AzureAd:OAuth2RedirectUrl"]}");
+                c.OAuthClientId($"{Configuration["AzureAd:ClientId"]}");
+                c.OAuthScopeSeparator(" ");
+                c.OAuthAdditionalQueryStringParams(new Dictionary<string, string>()
+                    {
+                       { "resource", $"{Configuration["AzureAd:Audience"]}" }
+                    });
             });
         }
     }
