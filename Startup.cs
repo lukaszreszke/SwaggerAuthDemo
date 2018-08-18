@@ -31,14 +31,7 @@ namespace SwaggerAuthDemo
                     Type = "oauth2",
                     AuthorizationUrl = $"https://login.microsoftonline.com/{Configuration["AzureAd:DirectoryId"]}/oauth2/authorize",
                     TokenUrl = $"https://login.microsoftonline.com/{Configuration["AzureAd:DirectoryId"]}/oauth2/token",
-                    Flow = "implicit",
-                    Scopes = new Dictionary<string, string>
-                    {
-                        { "user_impersonation", "Access Api" }
-                    }
-                });
-                c.AddSecurityRequirement(new Dictionary<string, IEnumerable<string>> {
-                    { "oauth2", new string []  { "user_impersonation" } }
+                    Flow = "implicit"
                 });
             });
         }
@@ -65,11 +58,10 @@ namespace SwaggerAuthDemo
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
                 c.OAuth2RedirectUrl($"{Configuration["AzureAd:OAuth2RedirectUrl"]}");
                 c.OAuthClientId($"{Configuration["AzureAd:ClientId"]}");
-                c.OAuthScopeSeparator(" ");
                 c.OAuthAdditionalQueryStringParams(new Dictionary<string, string>()
-                    {
-                       { "resource", $"{Configuration["AzureAd:Audience"]}" }
-                    });
+                {
+                   { "resource", $"{Configuration["AzureAd:Audience"]}" }
+                });
             });
         }
     }
