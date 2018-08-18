@@ -27,14 +27,7 @@ namespace SwaggerAuthDemo
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc(options =>
-            {
-                var policy = new AuthorizationPolicyBuilder()
-                    .RequireAuthenticatedUser()
-                    .AddAuthenticationSchemes(CookieAuthenticationDefaults.AuthenticationScheme, JwtBearerDefaults.AuthenticationScheme, OpenIdConnectDefaults.AuthenticationScheme)
-                    .Build();
-                options.Filters.Add(new AuthorizeFilter(policy));
-            }).SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             services.AddAuthentication(options =>
             {
@@ -64,15 +57,6 @@ namespace SwaggerAuthDemo
                     { "oauth2", new string []  { "user_impersonation" } }
                 });
             });
-
-            services.AddCors(options =>
-            {
-                options.AddPolicy("CorsPolicy",
-                                build => build.AllowAnyOrigin()
-                                    .AllowAnyMethod()
-                                    .AllowCredentials()
-                                    .AllowAnyHeader());
-            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -100,10 +84,7 @@ namespace SwaggerAuthDemo
                 {
                    { "resource", $"{Configuration["AzureAd:Audience"]}" }
                 });
-                c.OAuthScopeSeparator(" ");
             });
-            app.UseCors("CorsPolicy");
-    
             app.UseAuthentication();
             app.UseMvc();
 
