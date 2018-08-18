@@ -38,9 +38,7 @@ namespace SwaggerAuthDemo
             {
                 options.Audience = $"{Configuration["AzureAd:Audience"]}";
                 options.Authority = $"https://login.microsoftonline.com/{Configuration["AzureAd:DirectoryId"]}/";
-            })
-            .AddAzureAd(options => Configuration.Bind("AzureAd", options))
-            .AddCookie();
+            });
 
             services.AddSwaggerGen(c =>
             {
